@@ -40,13 +40,16 @@ shopt -q login_shell || . /etc/profile.d/git-prompt.sh
 esa='source env/Scripts/activate'
 
 # Shortcut for changing to current pressing project
-go='cd /c/code/d/scheduler;source env/Scripts/activate;start sublime'
+go='cd /c/code/project-peerassistant/mobile'
 
 # Script to run server and open chrome
 runserver='python manage.py runserver'
 
 # Script to change environment to DEV settings for python project
 devset='export DJANGO_SETTINGS_MODULE=mywebcalendar.settings.dev'
+
+# Script to get into DETER
+deter='ssh smcs70ab@users.isi.deterlab.net'
 
 # Desktop
 desktop='/c/users/pobox/desktop'
@@ -61,15 +64,66 @@ pyinit="git init;echo 'env/*' > .gitignore;virtualenv env;"
 pfreeze='pip freeze > requirements.txt'
 
 #Trying to change the default shell title
-function settitle(){
+function title(){
 	export PS1="\[\e[32m\]\u@\h \[\e[33m\]\w\[\e[0m\]\n$ "
 	echo -ne "\e]0;$1\a"
 }
 function setdynamictitle(){
-	trap 'settitle "$BASH_COMMAND"' DEBUG
+	trap 'title "$BASH_COMMAND"' DEBUG
 }
 function settitlepath(){
 	export PS1="\[\e]0;\w\a\]\n\[\e[32m\]\u@\h \[\e[33m\]\w\[\e[0m\]\n$ "
 }
 
-ss="start sublime"
+function sss() {
+	start sublime .
+}
+
+function ss() {
+	start sublime
+}
+
+function killport(){
+	taskkill \\F \\PID $(netstat -a -o -n | grep $1 | grep -oP [0-9]\{2,5\}$)
+}
+
+exp="start explorer ."
+
+function nstat() {
+	netstat -a -o -n | grep $1
+}
+function tkill(){
+	taskkill //F //PID $1
+}
+function gs(){
+	git status
+}
+function ga() {
+	git add .
+}
+function gc() {
+	git commit
+}
+
+function gd() {
+	git diff
+}
+
+function gu() {
+	git add -u
+}
+
+function rebash() {
+	source /etc/bash.bashrc
+}
+function explore() {
+	explorer.exe .
+}
+cmd='start cmd .'
+pictures='C:/Users/pobox/Pictures'
+function setaws() {
+	export AWS_PROFILE=$1
+}
+function RR() {
+	adb shell input text "RR"
+}
